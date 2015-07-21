@@ -21,7 +21,7 @@ Example:
 
     // Output:
     //
-    // YYYY-MM-DD HH:MM:SS at=main data=foo durration=108.258us
+    // 2015/07/21 04:57:22 level=info at=main foo=bar durration=102.972us
 */
 package ll
 

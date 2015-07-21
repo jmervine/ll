@@ -27,6 +27,6 @@ func main() {
 *outputs*
 
 ```
-YYYY-MM-DD HH:MM:SS at=main foo=bar duration=1.987us
+2015/07/21 04:57:22 level=info at=main foo=bar durration=102.972us
 ```
 
