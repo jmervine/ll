@@ -11,7 +11,7 @@ import (
 	. "github.com/jmervine/ll/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
 )
 
-var INFO_MAP = map[string]interface{}{
+var LOG_MAP = map[string]interface{}{
 	"at":     "at",
 	"method": "meth",
 	"status": 200,
@@ -35,12 +35,21 @@ func cleanLine(s string) string {
 	return strings.Join(strings.Split(strings.TrimSpace(s), " ")[2:], " ")
 }
 
+func TestLogger(T *testing.T) {
+	recorder := bytes.NewBuffer(nil)
+	SetOutput(recorder)
+
+	Logger.Println("foobar")
+	out := cleanLine(recorder.String())
+	Go(T).AssertEqual(out, "foobar")
+}
+
 func TestStandardLogger(T *testing.T) {
 	recorder := bytes.NewBuffer(nil)
 	SetOutput(recorder)
 
 	n := time.Now()
-	Info(&n, INFO_MAP)
+	Log(&n, LOG_MAP)
 
 	out := cleanLine(recorder.String())
 
@@ -53,7 +62,7 @@ func TestErrorLogger(T *testing.T) {
 	recorder := bytes.NewBuffer(nil)
 	SetOutput(recorder)
 
-	Info(nil, ERROR_MAP)
+	Log(nil, ERROR_MAP)
 
 	out := cleanLine(recorder.String())
 
@@ -65,7 +74,7 @@ func TestNoDebugLogger(T *testing.T) {
 	recorder := bytes.NewBuffer(nil)
 	SetOutput(recorder)
 
-	Debug(nil, INFO_MAP)
+	Debug(nil, LOG_MAP)
 	Go(T).AssertEqual("", recorder.String())
 }
 

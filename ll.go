@@ -13,7 +13,7 @@ Example:
 
         // ... do stuff ...
 
-        ll.Info(&begin, map[string]interface{} {
+        ll.Log(&begin, map[string]interface{} {
             "at": "main",
             "data": "foo",
         }
@@ -36,35 +36,35 @@ import (
 	"time"
 )
 
-// InfoLogger is exported as a pass through to log.Logger under the
+// Logger is exported as a pass through to log.Logger under the
 // hood, so default functions can still be called.
 //
 // Example:
 //
-// InfoLogger.Fatal("ack")
-var InfoLogger *log.Logger
+// Logger.Fatal("ack")
+var Logger *log.Logger
 
-// DebugLogger is exported as a pass through to log.Logger under the
+// Debugger is exported as a pass through to log.Logger under the
 // hood, so default functions can still be called.
 //
 // Example:
 //
-// DebugLogger.Println("ack")
+// Debugger.Println("ack")
 //
 // Warning: this will exit with no output when not in debug mode.
-// DebugLogger.Fatal("ack")
+// Debugger.Fatal("ack")
 //
 // TODO: create noop logger for when not in debug mode.
-var DebugLogger *log.Logger
+var Debugger *log.Logger
 
 func init() {
-	InfoLogger = log.New(os.Stdout, "", log.Flags())
+	Logger = log.New(os.Stdout, "", log.Flags())
 
 	// if anything but '/true/i', '/t/i' or '1' hide debug output
 	if !hasDebug() {
-		DebugLogger = log.New(ioutil.Discard, "", log.Flags())
+		Debugger = log.New(ioutil.Discard, "", log.Flags())
 	} else {
-		DebugLogger = InfoLogger
+		Debugger = Logger
 	}
 }
 
@@ -108,26 +108,26 @@ func logger(target *log.Logger, level string, begin *time.Time, meta map[string]
 	target.Println(strings.Join(line, " "))
 }
 
-// SetOutput allows you to change the output destination of both InfoLogger
-// and DebugLogger in one shot.
+// SetOutput allows you to change the output destination of both Logger
+// and Debugger in one shot.
 //
 // Example:
 //
 //     SetOutput(os.Stderr)
 func SetOutput(out io.Writer) {
-	InfoLogger = log.New(out, "", log.Flags())
+	Logger = log.New(out, "", log.Flags())
 	if hasDebug() {
-		DebugLogger = log.New(out, "", log.Flags())
+		Debugger = log.New(out, "", log.Flags())
 	}
 }
 
-// Info is the standard logger, always logging to os.Stdout by default.
+// Log is the standard logger, always logging to os.Stdout by default.
 //
 // Example usage:
 //
 //     begin := time.Now()
 //     // do stuff
-//     Info(&begin, map[string]interface{} {
+//     Log(&begin, map[string]interface{} {
 //         "at": "request",
 //         "method": "GET",
 //         "url: "/path/to/file.html",
@@ -138,7 +138,7 @@ func SetOutput(out io.Writer) {
 //     YYYY-MM-DD HH:MM:SS at=request method=GET url=/path/to/file.html error="something bad happened" durration=#ns
 //
 //     // without time
-//     Info(nil, map[string]interface{}{
+//     Log(nil, map[string]interface{}{
 //         "at": "request",
 //         "request": fmt.Sprintf("%+v", *req),
 //     })
@@ -146,12 +146,12 @@ func SetOutput(out io.Writer) {
 //     // Outputs:
 //     YYYY-MM-DD HH:MM:SS at=request request={ ... request args ... }
 //
-func Info(begin *time.Time, meta map[string]interface{}) {
-	logger(InfoLogger, "info", begin, meta)
+func Log(begin *time.Time, meta map[string]interface{}) {
+	logger(Logger, "info", begin, meta)
 }
 
 // Debug is the debug (DEBUG=true) logger, logging to os.Stdout by default
 // when os.Getenv("DEBUG") is true.
 func Debug(begin *time.Time, meta map[string]interface{}) {
-	logger(DebugLogger, "debug", begin, meta)
+	logger(Debugger, "debug", begin, meta)
 }
