@@ -1,28 +1,28 @@
-/* ll (short for linelogger) is a vary simple Scrolls'y (https://github.com/asenchi/scrolls)
- * style logger.
- *
- * Example:
- *
- *     package main
- *     import "time"
- *     import "gopkg.in/jmervine/ll.v1"
- *
- *     func main() {
- *         begin := time.Now()
- *
- *         // ... do stuff ...
- *
- *         ll.Info(&begin, map[string]interface{} {
- *             "at": "main",
- *             "data": "foo",
- *         }
- *     }
- *
- *     // Output:
- *     //
- *     // YYYY-MM-DD HH:MM:SS at=main data=foo durration=108.258us
- *
- */
+/*
+ll (short for linelogger) is a vary simple Scrolls'y (https://github.com/asenchi/scrolls)
+style logger.
+
+Example:
+
+    package main
+    import "time"
+    import "gopkg.in/jmervine/ll.v1"
+
+    func main() {
+        begin := time.Now()
+
+        // ... do stuff ...
+
+        ll.Info(&begin, map[string]interface{} {
+            "at": "main",
+            "data": "foo",
+        }
+    }
+
+    // Output:
+    //
+    // YYYY-MM-DD HH:MM:SS at=main data=foo durration=108.258us
+*/
 package ll
 
 import (

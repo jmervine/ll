@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	. "gopkg.in/jmervine/GoT.v1"
+	. "github.com/jmervine/ll/Godeps/_workspace/src/gopkg.in/jmervine/GoT.v1"
 )
 
 var INFO_MAP = map[string]interface{}{
