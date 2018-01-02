@@ -1,3 +1,5 @@
+> ## Archived in favor of https://github.com/sirupsen/logrus
+
 # ll
 
 short for "linelogger"
